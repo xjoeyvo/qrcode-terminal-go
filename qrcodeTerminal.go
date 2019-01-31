@@ -73,6 +73,7 @@ type qrcodeTerminal struct {
 	level qrcodeRecoveryLevel
 }
 
+var qrData [][]bool
 func (v *qrcodeTerminal) Get(content interface{}) (result *QRCodeString) {
 	var qr *qrcode.QRCode
 	var err error
@@ -83,8 +84,14 @@ func (v *qrcodeTerminal) Get(content interface{}) (result *QRCodeString) {
 	}
 	if qr != nil && err == nil {
 		data := qr.Bitmap()
+		qrData = data
 		result = v.getQRCodeString(data)
 	}
+	return
+}
+
+func (v *qrcodeTerminal) GetQR() (result [][]bool) {
+	result = qrData
 	return
 }
 
